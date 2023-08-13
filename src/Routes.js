@@ -7,6 +7,7 @@ import ErrorPage from "@/pages/Error/Error";
 
 // Main
 import AnalyticsPage from "@/pages/Dashboard/Dashboard";
+import TypographyPage from "@/pages/Typography/Typography";
 
 Vue.use(Router);
 
@@ -31,6 +32,11 @@ export default new Router({
           path: "dashboard",
           name: "AnalyticsPage",
           component: AnalyticsPage,
+        },
+        {
+          path: "typography",
+          name: "TypographyPage",
+          component: TypographyPage,
         },
       ],
     },

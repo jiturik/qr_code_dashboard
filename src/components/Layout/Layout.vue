@@ -13,15 +13,6 @@
         <transition name="router-animation">
           <router-view />
         </transition>
-        <footer class="contentFooter">
-          Sing App Vue Dashboard Free Template - Made by
-          <a
-            href="https://flatlogic.com"
-            rel="nofollow noopener noreferrer"
-            target="_blank"
-            >Flatlogic</a
-          >
-        </footer>
       </v-touch>
     </div>
   </div>

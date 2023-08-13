@@ -22,14 +22,14 @@
           index="dashboard"
           isHeader
         />
-        <!-- <NavLink
+        <NavLink
           :activeItem="activeItem"
-          header="Typography"
+          header="Create QR"
           link="/app/typography"
-          iconName="flaticon-list"
+          iconName="flaticon-qr-code"
           index="typography"
           isHeader
-        /> -->
+        />
         <!-- <NavLink
           :activeItem="activeItem"
           header="Tables Basic"
