@@ -1,19 +1,22 @@
-<template lang="html">
-  <div id="app">
-    <router-view></router-view>
-  </div>
+<template>
+  <router-view />
 </template>
 
-<script lang="js">
+<script>
+export default {
+  name: "App",
+  created() {
+    const currentPath = this.$router.history.current.path;
+
+    if (window.localStorage.getItem("authenticated") === "false") {
+      this.$router.push("/login");
+    }
+
+    if (currentPath === "/" || currentPath === "/app") {
+      this.$router.push("/app/dashboard");
+    }
+  },
+};
 </script>
 
-<style>
-@import "../node_modules/mdi/css/materialdesignicons.min.css";
-@import "../node_modules/flag-icon-css/css/flag-icon.min.css";
-@import "../node_modules/vue-snotify/styles/material.css";
-@import "../node_modules/typicons.font/src/font/typicons.css";
-</style>
-
-<style lang="scss">
-@import "assets/scss/shared/style";
-</style>
+<style src="./styles/theme.scss" lang="scss" />
