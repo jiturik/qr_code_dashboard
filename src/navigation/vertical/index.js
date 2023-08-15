@@ -1,6 +1,6 @@
 export default [
   {
-    title: "Dashboard",
+    title: "Users",
     route: "home",
     icon: "HomeIcon",
   },

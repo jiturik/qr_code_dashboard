@@ -7,7 +7,7 @@
     <b-col class="content-header-left mb-2" cols="12" md="9">
       <b-row class="breadcrumbs-top">
         <b-col cols="12">
-          <h2 class="content-header-title float-left pr-1 mb-0">
+          <h2 class="float-left pr-1 mb-0">
             <b-button
               size="sm"
               v-if="$route.name != 'home'"
@@ -18,7 +18,7 @@
             >
               <feather-icon icon="ArrowLeftIcon" />
             </b-button>
-            {{ $route.meta.pageTitle }}
+            <b> {{ $route.meta.pageTitle }}</b>
           </h2>
           <div class="breadcrumb-wrapper">
             <b-breadcrumb>

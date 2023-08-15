@@ -24,7 +24,7 @@ const router = new VueRouter({
       name: "home",
       component: () => import("@/views/pages/Home/Home.vue"),
       meta: {
-        pageTitle: "Dashboard",
+        pageTitle: "QR-Code Users",
       },
     },
     {
@@ -33,6 +33,14 @@ const router = new VueRouter({
       component: () => import("@/views/pages/Home/CreateQr.vue"),
       meta: {
         pageTitle: "Create QR",
+      },
+    },
+    {
+      path: "/grdetails",
+      name: "qrdetails",
+      component: () => import("@/views/pages/Home/userQrDetails.vue"),
+      meta: {
+        pageTitle: "Qr Details",
       },
     },
   ],
