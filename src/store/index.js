@@ -1,12 +1,20 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
 
-import layout from './layout';
+// Modules
+import app from "./app";
+import appConfig from "./app-config";
+import verticalMenu from "./vertical-menu";
+import user from "./user";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    layout,
+    app,
+    appConfig,
+    verticalMenu,
+    user,
   },
+  strict: process.env.DEV,
 });

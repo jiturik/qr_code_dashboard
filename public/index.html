@@ -3,72 +3,40 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <title>Qr App</title>
     <meta
-      name="description"
-      content="Free & Open Source Vue.js Admin Dashboard Template built with vue-router, vuex and bootstrap 4"
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1"
     />
-    <meta
-      name="keywords"
-      content="vue admin, vue admin template, vue dashboard, free vue.js admin dashboard, open source vue admin dashboard, vue template"
-    />
-    <meta name="author" content="Flatlogic LLC" />
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=UA-36759672-9"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
 
-      gtag("config", "UA-36759672-9");
-    </script>
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-      (function (m, e, t, r, i, k, a) {
-        m[i] =
-          m[i] ||
-          function () {
-            (m[i].a = m[i].a || []).push(arguments);
-          };
-        m[i].l = 1 * new Date();
-        (k = e.createElement(t)),
-          (a = e.getElementsByTagName(t)[0]),
-          (k.async = 1),
-          (k.src = r),
-          a.parentNode.insertBefore(k, a);
-      })(
-        window,
-        document,
-        "script",
-        "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js",
-        "ym"
-      );
-      ym(48020168, "init", {
-        id: 48020168,
-        clickmap: true,
-        trackLinks: true,
-        accurateTrackBounce: true,
-        webvisor: true,
-        trackHash: true,
-        ecommerce: "dataLayer",
-      });
-    </script>
-    <!-- /Yandex.Metrika counter -->
+    <!-- Splash Screen/Loader Styles -->
+    <link rel="stylesheet" type="text/css" href="<%= BASE_URL %>loader.css" />
+
+    <link rel="icon" href="<%= BASE_URL %>favicon3.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <title>QR APP</title>
   </head>
+
   <body>
     <noscript>
       <strong
-        >We're sorry but vue-cli doesn't work properly without JavaScript
-        enabled. Please enable it to continue.</strong
+        >We're sorry but QR APP - Vuejs Admin Dashboard Template doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
       >
     </noscript>
+    <div id="loading-bg">
+      <!-- <div class="loading-logo">
+        <img src="<%= BASE_URL %>logo.png" alt="Logo" />
+      </div> -->
+      <div class="loading">
+        <div class="effect-1 effects"></div>
+        <div class="effect-2 effects"></div>
+        <div class="effect-3 effects"></div>
+      </div>
+    </div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
