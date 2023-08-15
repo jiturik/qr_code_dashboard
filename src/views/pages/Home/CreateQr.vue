@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row>
-      <b-col md="8" offset-md="2">
+      <b-col md="10" offset-md="1">
         <b-card
           border
           v-for="(item, index) in sectionArray"
@@ -11,7 +11,7 @@
           <b-form-group
             :label="item.label"
             label-for="nested-street"
-            label-cols-sm="2"
+            label-cols-sm="3"
             label-align-sm="left"
           >
             <b-form-input

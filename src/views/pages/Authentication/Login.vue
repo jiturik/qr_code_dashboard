@@ -170,7 +170,7 @@ export default {
     imgUrl() {
       if (store.state.appConfig.layout.skin === "dark") {
         this.sideImg = require("@/assets/images/pages/qr-code.png");
-        // this.sideImg = require("@/assets/images/pages/corsymo_logo.png");
+
         return this.sideImg;
       }
       return this.sideImg;
