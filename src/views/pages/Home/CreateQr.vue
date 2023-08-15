@@ -60,7 +60,7 @@
 
         <b-button
           block
-          class="m-3"
+          class="mt-3 mb-3"
           variant="primary "
           @click="onGenerateQrCode"
         >

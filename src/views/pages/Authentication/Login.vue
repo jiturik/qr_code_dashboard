@@ -10,7 +10,7 @@
         <div
           class="w-100 d-lg-flex align-items-center justify-content-center px-5"
         >
-          <!-- <b-img width="450" fluid :src="imgUrl" alt="Login V2" /> -->
+          <b-img width="150" fluid :src="imgUrl" alt="Login V2" />
         </div>
       </b-col>
 
@@ -158,7 +158,7 @@ export default {
         password: "",
         user_name: "",
       },
-      sideImg: "",
+      sideImg: require("@/assets/images/pages/qr-code.png"),
       required,
       email,
     };
@@ -169,7 +169,7 @@ export default {
     },
     imgUrl() {
       if (store.state.appConfig.layout.skin === "dark") {
-        this.sideImg = "";
+        this.sideImg = require("@/assets/images/pages/qr-code.png");
         // this.sideImg = require("@/assets/images/pages/corsymo_logo.png");
         return this.sideImg;
       }
