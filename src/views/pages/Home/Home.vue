@@ -23,6 +23,7 @@
                 class="mt-2"
                 :size="qrSize"
                 level="H"
+                v-if="imgIndex == 0"
                 :value="qrValue + '/' + item.unique_code_generate"
               ></qrcode-vue>
             </b-col>
