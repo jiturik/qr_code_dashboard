@@ -5,6 +5,9 @@ import { TokenService } from "./storageService";
 var loader = null;
 
 export default function Api() {
+  console.log({
+    baseURL: process.env.VUE_APP_BASEURL,
+  });
   const instance = axios.create({
     baseURL: process.env.VUE_APP_BASEURL,
   });
@@ -36,9 +39,12 @@ export default function Api() {
         loader.hide();
         loader = null;
       }
-      
+
       if (!error["response"]) {
-        showErrorMessage("Your authorization token is invalid or expired ", error);
+        showErrorMessage(
+          "Your authorization token is invalid or expired ",
+          error
+        );
         // if (window.location.pathname !== '/') window.location.replace("/")
         return Promise.reject(error);
       } else if (error.response.status == 403) {
