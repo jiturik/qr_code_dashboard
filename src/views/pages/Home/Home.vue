@@ -8,13 +8,10 @@
     <b-row>
       <b-col v-for="(item, index) in allUserList" :key="index" cols="12" md="3">
         <b-card no-body>
-          <b-row
-            v-for="(imgItem, imgIndex) in item.all_data"
-            :key="imgIndex"
-            v-if="imgItem.inputType == 'file'"
-          >
+          <b-row v-for="(imgItem, imgIndex) in item.all_data" :key="imgIndex">
             <b-col>
               <b-img
+                v-if="imgItem.inputType == 'file'"
                 rounded="circle"
                 fluid
                 :src="BASE_URL + imgItem.vModelValue"
