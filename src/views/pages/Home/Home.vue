@@ -8,24 +8,29 @@
     <b-row>
       <b-col v-for="(item, index) in allUserList" :key="index" cols="12" md="3">
         <b-card no-body>
-          <b-row>
+          <b-row
+            v-for="(imgItem, imgIndex) in item.all_data"
+            :key="imgIndex"
+            v-if="imgItem.inputType == 'file'"
+          >
             <b-col>
               <b-img
                 rounded="circle"
                 fluid
-                src="https://picsum.photos/250/250/?image=54"
+                :src="BASE_URL + imgItem.vModelValue"
                 alt="Image 1"
               ></b-img>
             </b-col>
             <b-col>
-              <b-img
-                thumbnail
-                fluid
-                src="https://picsum.photos/250/250/?image=58"
-                alt="Image 2"
-              ></b-img>
+              <qrcode-vue
+                class="mt-2"
+                :size="qrSize"
+                level="H"
+                :value="qrValue + '/' + item.unique_code_generate"
+              ></qrcode-vue>
             </b-col>
           </b-row>
+
           <b-list-group flush>
             <b-list-group-item
               v-for="(subItem, subIndex) in item.all_data"
@@ -93,6 +98,7 @@ import {
 } from "bootstrap-vue";
 import Ripple from "vue-ripple-directive";
 import { GetAllUsers } from "@/apiServices/DashboardServices";
+import QrcodeVue from "qrcode.vue";
 
 export default {
   components: {
@@ -105,15 +111,18 @@ export default {
     BCardImg,
     BCardBody,
     BCardTitle,
-
     BCardSubTitle,
     BListGroup,
     BListGroupItem,
     BImg,
+    QrcodeVue,
   },
   data() {
     return {
       allUserList: [],
+      BASE_URL: process.env.VUE_APP_BASEURL,
+      qrValue: process.env.VUE_APP_DASHBOARD_URL,
+      qrSize: 100,
     };
   },
 

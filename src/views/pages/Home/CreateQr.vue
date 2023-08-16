@@ -21,6 +21,7 @@
               v-model="item.label"
               id="nested-street"
             ></b-form-input>
+
             <b-form-input
               :placeholder="item.label"
               v-if="item.inputType == 'text'"
@@ -35,6 +36,13 @@
               :options="item.selectOptions"
               :clearable="false"
             />
+            <b-form-file
+              @input="onFileUpload(item, index)"
+              v-if="item.inputType == 'file'"
+              v-model="item.vModelValue"
+              placeholder="Choose a file or drop it here..."
+              drop-placeholder="Drop file here..."
+            ></b-form-file>
 
             <flat-pickr
               v-if="item.inputType == 'date'"
@@ -84,6 +92,7 @@ import {
   BButton,
   BFormGroup,
   BFormInput,
+  BFormFile,
 } from "bootstrap-vue";
 import Ripple from "vue-ripple-directive";
 import vSelect from "vue-select";
@@ -93,6 +102,7 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import ToastificationContentVue from "@core/components/toastification/ToastificationContent.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -107,11 +117,13 @@ export default {
     flatPickr,
     quillEditor,
     ToastificationContentVue,
+    BFormFile,
   },
   data() {
     return {
       sectionArray: [],
       unique_code_generate: this.$route.query.qrId,
+      BASE_URL: process.env.VUE_APP_BASEURL,
     };
   },
 
@@ -125,6 +137,29 @@ export default {
   },
 
   methods: {
+    async onFileUpload(item, index) {
+      this.loading = true;
+      try {
+        const url = this.BASE_URL + "/admin/uploadimage";
+        const formData = new FormData();
+        formData.append("image", item.vModelValue);
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+            authorization: localStorage.getItem("access_token"),
+            "x-access-token": localStorage.getItem("access_token"),
+          },
+        };
+        const response = await axios.post(url, formData, config);
+        if (response.data.message) {
+          this.sectionArray[index].vModelValue = response.data.path;
+        }
+        this.loading = false;
+      } catch (err) {
+        this.loading = false;
+        console.log("Error in UploadFile ", err);
+      }
+    },
     async onGetUserQRDetails() {
       try {
         const response = await GetUserQrDetails({

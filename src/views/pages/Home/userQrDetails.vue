@@ -1,12 +1,45 @@
 <template>
   <div>
     <b-row>
-      <b-col md="10" offset-md="1">
+      <b-col md="8" offset="2">
         <div>
           <div>
             <div class="panel panel-info">
               <div class="panel-heading m-2">
-                <h3 class="panel-title text-center"><b>Profile</b></h3>
+                <div>
+                  <b-col>
+                    <b-row
+                      v-for="(imgItem, imgIndex) in userDetailsArray"
+                      :key="imgIndex"
+                      v-if="imgItem.inputType == 'file'"
+                    >
+                      <b-col>
+                        <b-img
+                          class="align-left text-left"
+                          width="150"
+                          height="150"
+                          rounded="circle"
+                          fluid
+                          :src="BASE_URL + imgItem.vModelValue"
+                          alt="Image"
+                        ></b-img
+                      ></b-col>
+                      <b-col
+                        ><h3 class="panel-title text-center">
+                          <b>Profile</b>
+                        </h3></b-col
+                      >
+                      <b-col>
+                        <qrcode-vue
+                          class="mt-2 align-right text-right"
+                          :size="qrSize"
+                          level="H"
+                          :value="qrValue + '/' + imgItem.unique_code_generate"
+                        ></qrcode-vue
+                      ></b-col>
+                    </b-row>
+                  </b-col>
+                </div>
               </div>
               <div>
                 <div>
@@ -17,8 +50,10 @@
                           v-for="(item, index) in userDetailsArray"
                           :key="index"
                         >
-                          <td>{{ item.label }} :</td>
-                          <td>
+                          <td v-if="item.inputType != 'file'">
+                            {{ item.label }} :
+                          </td>
+                          <td v-if="item.inputType != 'file'">
                             <!-- <div
                               style="width: 20px !important; display: block"
                               v-if="
@@ -53,6 +88,7 @@ import { BLink, BButton, BImg, BRow, BCol } from "bootstrap-vue";
 import VuexyLogo from "@core/layouts/components/Logo.vue";
 import { GetUserQrDetails } from "@/apiServices/DashboardServices";
 import ToastificationContentVue from "@core/components/toastification/ToastificationContent.vue";
+import QrcodeVue from "qrcode.vue";
 
 export default {
   components: {
@@ -62,11 +98,15 @@ export default {
     BImg,
     BRow,
     BCol,
+    QrcodeVue,
   },
   data() {
     return {
       unique_code_generate: this.$route.query.qrId,
       userDetailsArray: [],
+      BASE_URL: process.env.VUE_APP_BASEURL,
+      qrValue: process.env.VUE_APP_DASHBOARD_URL,
+      qrSize: 100,
     };
   },
   computed: {},
