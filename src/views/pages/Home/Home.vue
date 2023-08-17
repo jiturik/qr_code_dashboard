@@ -8,23 +8,35 @@
     <b-row>
       <b-col v-for="(item, index) in allUserList" :key="index" cols="12" md="3">
         <b-card no-body>
-          <b-row v-for="(imgItem, imgIndex) in item.all_data" :key="imgIndex">
+          <b-row
+            v-for="(imgItem, imgIndex) in item.all_data"
+            :key="imgIndex"
+            v-if="imgItem.inputType == 'file'"
+          >
             <b-col>
               <b-img
-                v-if="imgItem.inputType == 'file'"
+                v-if="imgItem.vModelValue"
+                class="m-1"
                 rounded="circle"
                 fluid
                 :src="BASE_URL + imgItem.vModelValue"
                 alt="Image 1"
               ></b-img>
+              <b-img
+                v-else
+                class="m-1"
+                rounded="circle"
+                fluid
+                :src="imgAvtar"
+                alt="Image 1"
+              ></b-img>
             </b-col>
             <b-col>
               <qrcode-vue
-                class="mt-2"
+                class="m-1"
                 :size="qrSize"
                 level="H"
-                v-if="imgIndex == 0"
-                :value="qrValue + '/' + item.unique_code_generate"
+                :value="qrValue + item.unique_code_generate"
               ></qrcode-vue>
             </b-col>
           </b-row>
@@ -119,8 +131,9 @@ export default {
     return {
       allUserList: [],
       BASE_URL: process.env.VUE_APP_BASEURL,
-      qrValue: process.env.VUE_APP_DASHBOARD_URL,
+      qrValue: null,
       qrSize: 100,
+      imgAvtar: require("@/assets/images/avatars/user.png"),
     };
   },
 
@@ -129,6 +142,7 @@ export default {
   },
 
   beforeMount() {
+    this.qrValue = window.location.origin + "/";
     this.onGetAllUsers();
   },
 
