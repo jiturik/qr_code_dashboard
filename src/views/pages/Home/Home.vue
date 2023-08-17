@@ -175,7 +175,7 @@ export default {
       qrSize: 100,
       imgAvtar: require("@/assets/images/avatars/user.png"),
       searchUser: "",
-      limit: 1,
+      limit: 9,
       currentPage: 1,
       showLoadMore: false,
       totalUsers: 0,
