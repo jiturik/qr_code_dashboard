@@ -6,6 +6,28 @@
       </button>
     </div> -->
     <b-row>
+      <b-col cols="4" class="mb-1 p-0 ml-3">
+        <b-form-input
+          placeholder="Search"
+          v-model="searchUser"
+          id="nested-street"
+        ></b-form-input>
+      </b-col>
+      <b-col cols="1" class="mb-1 p-0">
+        <b-button @click="onGetAllUsers">Search</b-button>
+      </b-col>
+      <b-col cols="6" class="mb-1" style="text-align: right">
+        <button
+          class="AddNewButton text-center"
+          @click="$router.push({ name: 'createqr' })"
+        >
+          Create New User
+        </button>
+      </b-col>
+    </b-row>
+
+    <hr class="p-0 mb-1" style="border: 1px solid rgb(197 196 196)" />
+    <b-row v-if="false">
       <b-col v-for="(item, index) in allUserList" :key="index" cols="12" md="3">
         <b-card no-body>
           <b-row
@@ -45,11 +67,7 @@
             <b-list-group-item
               v-for="(subItem, subIndex) in item.all_data"
               :key="subIndex"
-              v-if="
-                subItem.label == 'Full Name' ||
-                subItem.label == 'Date of Birth' ||
-                subItem.label == 'Gender'
-              "
+              v-if="subItem.label == 'Full Name'"
               >{{ subItem.label }} :
               {{ subItem.vModelValue }}</b-list-group-item
             >
@@ -78,15 +96,22 @@
           </template>
         </b-card>
       </b-col>
-      <b-col cols="12" md="3">
-        <button
-          class="AddNewButton text-center"
-          @click="$router.push({ name: 'createqr' })"
-        >
-          Create New User QR
-        </button>
-      </b-col>
     </b-row>
+
+    <div class="card-container" v-if="allUserList.length">
+      <template v-for="item in allUserList">
+        <CardComponent
+          :data="item.all_data"
+          :unique_id="item.unique_code_generate"
+          :key="item"
+        />
+      </template>
+    </div>
+    <div v-else>
+      <div style="width: 100%; display: flex; justify-content: space-around">
+        <h5 style="font-weight: bold">No Users Found</h5>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -104,11 +129,13 @@ import {
   BCardSubTitle,
   BListGroup,
   BListGroupItem,
+  BFormInput,
   BImg,
 } from "bootstrap-vue";
 import Ripple from "vue-ripple-directive";
 import { GetAllUsers } from "@/apiServices/DashboardServices";
 import QrcodeVue from "qrcode.vue";
+import CardComponent from "./CardComponent.vue";
 
 export default {
   components: {
@@ -126,6 +153,8 @@ export default {
     BListGroupItem,
     BImg,
     QrcodeVue,
+    BFormInput,
+    CardComponent,
   },
   data() {
     return {
@@ -134,6 +163,10 @@ export default {
       qrValue: null,
       qrSize: 100,
       imgAvtar: require("@/assets/images/avatars/user.png"),
+      searchUser: "",
+      limit: 12,
+      currentPage: 1,
+      totalUsers: 0,
     };
   },
 
@@ -156,10 +189,18 @@ export default {
     async onGetAllUsers() {
       this.allUserList = [];
       try {
-        const response = await GetAllUsers({});
+        const response = await GetAllUsers({
+          search: this.searchUser,
+          limit: this.limit,
+          currentPage: this.currentPage,
+        });
 
         if (response.data.status) {
           this.allUserList = response.data.Records.data;
+
+          if (this.currentPage == 1) {
+            this.totalUsers = response.data.Records.pagination.total;
+          }
         }
       } catch (err) {
         console.log("Error in GenerateQrCode ", err);
@@ -170,6 +211,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card-container {
+  display: flex !important;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
 .AddNewButton {
   display: inline-block;
   padding: 10px 15px;
@@ -179,7 +225,8 @@ export default {
   text-decoration: none;
   outline: none;
   color: #fff;
-  background-color: #4caf50;
+  background-color: #1f307a !important;
+
   border: none;
   border-radius: 15px;
 }

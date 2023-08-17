@@ -1,28 +1,112 @@
 <template>
-  <div>
-    <div class="panel">
-      <div class="card card--front">
-        <div class="row">
-          <div class="col-md-5 qr_code">
-            <img src="@/assets/images/logo/qr-code.png" style="height: 110px" />
-          </div>
-          <div class="col-md-6 crddetails">
-            <h6 style="color: #fff; letter-spacing: 4px">AJIT MAURYA</h6>
-          </div>
+  <div class="card card--front" @click="onEdit">
+    <div class="row display-flex mb-1 alignmentClass">
+      <img src="@/assets/images/pages/medicallogo.png" style="height: 40px" />
+      <h6 class="fontFamily">Medical Information & Scan QR More Detail</h6>
+    </div>
+    <div class="row">
+      <div class="col-4 qr_code p-0">
+        <qrcode-vue
+          :size="qrSize"
+          level="H"
+          :value="qrValue + unique_id"
+          style="padding: 5px"
+        >
+        </qrcode-vue>
+      </div>
+      <div class="col-7 crddetails">
+        <div class="d-flex alignmentClass mb-5px">
+          <h6 class="fontFamily">Name:</h6>
+          <h6 class="fontFamily" style="color: #fff">
+            {{ getname("Full Name") }}
+          </h6>
+        </div>
+        <div class="d-flex alignmentClass mb-5px">
+          <h6 class="fontFamily">Blood:</h6>
+          <h6 class="fontFamily" style="color: #fff">
+            {{ getname("Blood Group") }}
+          </h6>
+        </div>
+        <div class="d-flex alignmentClass mb-5px">
+          <h6 class="fontFamily">Height:</h6>
+          <h6 class="fontFamily" style="color: #fff">
+            {{ getname("Height") }}
+          </h6>
+        </div>
+        <div class="d-flex alignmentClass mb-5px">
+          <h6 class="fontFamily">Weight:</h6>
+          <h6 class="fontFamily" style="color: #fff">
+            {{ getname("Weight") }}
+          </h6>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+<script>
+import QrcodeVue from "qrcode.vue";
+
+export default {
+  props: {
+    data: Object,
+    unique_id: String,
+  },
+  components: {
+    QrcodeVue,
+  },
+  data() {
+    return {
+      BASE_URL: process.env.VUE_APP_BASEURL,
+      qrValue: null,
+      qrSize: 90,
+      qrValue: null,
+    };
+  },
+
+  methods: {
+    getname(type) {
+      console.log(this.data);
+      let checkData = this.data.filter((z) => z.label == type);
+      console.log(checkData);
+      return checkData.length ? checkData[0].vModelValue || "-" : "-";
+    },
+    beforeMount() {
+      this.qrValue = window.location.origin + "/";
+    },
+
+    async onEdit() {
+      this.$router.push({
+        name: "createqr",
+        query: { qrId: this.unique_id },
+      });
+    },
+  },
+};
+</script>
+
 <style scoped>
+.alignmentClass {
+  justify-content: space-between;
+  align-items: center;
+}
+.mb-5px {
+  margin-bottom: 5px;
+}
+.fontFamily {
+  font-family: math;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #cfd4da;
+}
 .qr_code {
   background: #fff;
-  padding: 10px;
+  /* padding: 10px; */
+  height: 100px;
 }
 .crddetails {
   border-left: 1px solid #fff;
-  padding: 10px;
+  padding: 0px 10px;
   color: #fff;
   margin-left: 20px;
   /* background: #bc9393; */
@@ -38,16 +122,18 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  width: 350px;
-  height: 200px;
+  width: 346px;
+  height: 180px;
   text-align: left;
-  padding: 30px;
+  padding: 12px 30px;
   margin-bottom: 50px;
   color: #fff;
   border-radius: 20px;
   box-sizing: border-box;
   background: url("../../../assets/images/pages/backgroundImage.jpg") no-repeat
     0 0 #141819;
+  cursor: pointer;
+  margin: 5px;
 }
 .card__number {
   font-size: 26px;

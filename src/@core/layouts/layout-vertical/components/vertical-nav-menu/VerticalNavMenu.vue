@@ -35,7 +35,7 @@
           </li>
 
           <!-- Toggler Button -->
-          <li class="nav-item nav-toggle">
+          <li class="nav-item nav-toggle" v-if="false">
             <b-link class="nav-link modern-nav-toggle">
               <feather-icon
                 icon="XIcon"
@@ -90,6 +90,11 @@ import VerticalNavMenuItems from "./components/vertical-nav-menu-items/VerticalN
 import useVerticalNavMenu from "./useVerticalNavMenu";
 
 export default {
+  mounted() {
+    setTimeout(() => {
+      this.toggleCollapsed();
+    }, 1);
+  },
   components: {
     VuePerfectScrollbar,
     VerticalNavMenuItems,
