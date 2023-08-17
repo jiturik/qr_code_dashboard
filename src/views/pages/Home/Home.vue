@@ -14,7 +14,7 @@
         ></b-form-input>
       </b-col>
       <b-col cols="1" class="mb-1 p-0">
-        <b-button @click="onGetAllUsers">Search</b-button>
+        <b-button @click="onSearchUser">Search</b-button>
       </b-col>
       <b-col cols="6" class="mb-1" style="text-align: right">
         <button
@@ -23,6 +23,11 @@
         >
           Create New User
         </button>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="12" style="text-align: right">
+        <u>Total : {{ this.totalUsers }} Users</u>
       </b-col>
     </b-row>
 
@@ -98,7 +103,7 @@
       </b-col>
     </b-row>
 
-    <div class="card-container" v-if="allUserList.length">
+    <div class="card-container pb-3" v-if="allUserList.length">
       <template v-for="item in allUserList">
         <CardComponent
           :data="item.all_data"
@@ -112,6 +117,12 @@
         <h5 style="font-weight: bold">No Users Found</h5>
       </div>
     </div>
+
+    <b-row class="pb-3" v-if="showLoadMore">
+      <b-col cols="12" style="text-align: center">
+        <b-button variant="info" @click="showLoadMoreData">Load More</b-button>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -164,9 +175,11 @@ export default {
       qrSize: 100,
       imgAvtar: require("@/assets/images/avatars/user.png"),
       searchUser: "",
-      limit: 12,
+      limit: 1,
       currentPage: 1,
+      showLoadMore: false,
       totalUsers: 0,
+      totalPages: 0,
     };
   },
 
@@ -180,14 +193,22 @@ export default {
   },
 
   methods: {
+    showLoadMoreData() {
+      this.currentPage = this.currentPage + 1;
+      this.onGetAllUsers();
+    },
     async onEdit(unique_code_generate) {
       this.$router.push({
         name: "createqr",
         query: { qrId: unique_code_generate },
       });
     },
-    async onGetAllUsers() {
+    onSearchUser() {
+      this.currentPage = 1;
       this.allUserList = [];
+      this.onGetAllUsers();
+    },
+    async onGetAllUsers() {
       try {
         const response = await GetAllUsers({
           search: this.searchUser,
@@ -196,11 +217,16 @@ export default {
         });
 
         if (response.data.status) {
-          this.allUserList = response.data.Records.data;
+          this.allUserList = [
+            ...this.allUserList,
+            ...response.data.Records.data,
+          ];
 
           if (this.currentPage == 1) {
             this.totalUsers = response.data.Records.pagination.total;
+            this.totalPages = response.data.Records.pagination.lastPage;
           }
+          this.showLoadMore = this.totalPages != this.currentPage;
         }
       } catch (err) {
         console.log("Error in GenerateQrCode ", err);
