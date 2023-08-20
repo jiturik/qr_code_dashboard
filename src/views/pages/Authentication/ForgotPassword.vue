@@ -1,82 +1,52 @@
 <template>
-  <div class="auth-wrapper auth-v2">
-    <b-row class="auth-inner m-0">
-      <!-- Brand logo-->
-      <b-link class="brand-logo">
-        <vuexy-logo />
-        <h2 class="brand-text text-primary ml-1">
-          Vuexy
-        </h2>
-      </b-link>
-      <!-- /Brand logo-->
-
-      <!-- Left Text-->
-      <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
-        <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
-          <b-card-title title-tag="h2" class="font-weight-bold mb-1">
-            Forgot Password? 🔒
-          </b-card-title>
-          <b-card-text class="mb-2">
-            Enter your email and we'll send you instructions to reset your
-            password
-          </b-card-text>
-
-          <!-- form -->
-          <validation-observer ref="simpleRules">
-            <b-form
-              class="auth-forgot-password-form mt-2"
-              @submit.prevent="validationForm"
-            >
-              <b-form-group label="Email" label-for="forgot-password-email">
-                <validation-provider
-                  #default="{ errors }"
-                  name="Email"
-                  rules="required|email"
-                >
-                  <b-form-input
-                    id="forgot-password-email"
-                    v-model="userEmail"
-                    :state="errors.length > 0 ? false : null"
-                    name="forgot-password-email"
-                    placeholder="john@example.com"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-
-              <b-button type="submit" variant="primary" block>
-                Send reset link
-              </b-button>
-            </b-form>
-          </validation-observer>
-
-          <p class="text-center mt-2">
-            <b-link :to="{ name: 'login' }">
-              <feather-icon icon="ChevronLeftIcon" /> Back to login
-            </b-link>
-          </p>
-        </b-col>
-      </b-col>
-
-      <!-- /Left Text-->
-
-      <!-- Forgot password-->
-      <b-col lg="8" class="d-none d-lg-flex align-items-center p-5">
+  <div>
+    <div class="card p-4">
+      <div
+        class="image d-flex flex-column justify-content-center align-items-center"
+      >
+        <button class="btn btn-secondary">
+          <img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100" />
+        </button>
+        <span class="name mt-3">Eleanor Pena</span>
+        <span class="idd">@eleanorpena</span>
         <div
-          class="w-100 d-lg-flex align-items-center justify-content-center px-5"
+          class="d-flex flex-row justify-content-center align-items-center gap-2"
         >
-          <b-img fluid :src="imgUrl" alt="Forgot password V2" />
+          <span class="idd1">Oxc4c16a645_b21a</span>
+          <span><i class="fa fa-copy"></i></span>
         </div>
-      </b-col>
-      <!-- /Forgot password-->
-    </b-row>
+        <div
+          class="d-flex flex-row justify-content-center align-items-center mt-3"
+        >
+          <span class="number">1069 <span class="follow">Followers</span></span>
+        </div>
+        <div class="d-flex mt-2">
+          <button class="btn1 btn-dark">Edit Profile</button>
+        </div>
+        <div class="text mt-3">
+          <span
+            >Eleanor Pena is a creator of minimalistic x bold graphics and
+            digital artwork.<br /><br />
+            Artist/ Creative Director by Day #NFT minting@ with FND night.
+          </span>
+        </div>
+        <div
+          class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"
+        >
+          <span><i class="fa fa-twitter"></i></span>
+          <span><i class="fa fa-facebook-f"></i></span>
+          <span><i class="fa fa-instagram"></i></span>
+          <span><i class="fa fa-linkedin"></i></span>
+        </div>
+        <div class="px-2 rounded mt-4 date">
+          <span class="join">Joined May,2021</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable global-require */
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import VuexyLogo from '@core/layouts/components/Logo.vue';
 import {
   BRow,
   BCol,
@@ -89,10 +59,6 @@ import {
   BFormInput,
   BButton,
 } from "bootstrap-vue";
-import { required, email } from "@validations";
-import store from "@/store/index";
-import AuthServices from "@/apiServices/AuthServices";
-import ToastificationContentVue from '@core/components/toastification/ToastificationContent.vue';
 
 export default {
   components: {
@@ -106,71 +72,102 @@ export default {
     BFormInput,
     BCardTitle,
     BCardText,
-    ValidationProvider,
-    ValidationObserver,
-    VuexyLogo
   },
   data() {
-    return {
-      userEmail: "",
-      sideImg: require("@/assets/images/pages/forgot-password-v2.svg"),
-      // validation
-      required,
-      email,
-    };
+    return {};
   },
-  computed: {
-    imgUrl() {
-      if (store.state.appConfig.layout.skin === "dark") {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.sideImg = require("@/assets/images/pages/forgot-password-v2-dark.svg");
-        return this.sideImg;
-      }
-      return this.sideImg;
-    },
-  },
-  methods: {
-    validationForm() {
-      this.$refs.simpleRules.validate().then(async (success) => {
-        if (success) {
-          try {
-            const response = await AuthServices.SendPasswordResetLink({
-              user_email: this.userEmail,
-            });
-            if (response.data.status) {
-              this.$toast({
-                component: ToastificationContentVue,
-                props: {
-                  title: response.data.message || "Reset Link Sent",
-                  icon: "SendIcon",
-                  variant: "success",
-                },
-              });
-              this.$router.replace('/');
-            }
-          } catch (error) {
-            console.log("Error in sendPasswordResetLink ", error);
-            this.$toast({
-              component: ToastificationContentVue,
-              props: {
-                title: "Failed",
-                icon: "X",
-                variant: "failure",
-              },
-            });
-          }
-        }
-      });
-    },
-  },
+  computed: {},
+  methods: {},
 };
 </script>
 
-<style lang="scss">
-.fp_logo {
-  height: 50px;
-  width: 50px;
+<style lang="scss" scoped>
+* {
+  margin: 0;
+  padding: 0;
 }
 
-@import "@core/scss/vue/pages/page-auth.scss";
+body {
+  background-color: #000;
+}
+
+.card {
+  width: 350px;
+  background-color: #efefef;
+  border: none;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.image img {
+  transition: all 0.5s;
+}
+
+.card:hover .image img {
+  transform: scale(1.5);
+}
+
+.btn {
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+}
+
+.name {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.idd {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.idd1 {
+  font-size: 12px;
+}
+
+.number {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.follow {
+  font-size: 12px;
+  font-weight: 500;
+  color: #444444;
+}
+
+.btn1 {
+  height: 40px;
+  width: 150px;
+  border: none;
+  background-color: #000;
+  color: #aeaeae;
+  font-size: 15px;
+}
+
+.text span {
+  font-size: 13px;
+  color: #545454;
+  font-weight: 500;
+}
+
+.icons i {
+  font-size: 19px;
+}
+
+hr .new1 {
+  border: 1px solid;
+}
+
+.join {
+  font-size: 14px;
+  color: #a0a0a0;
+  font-weight: bold;
+}
+
+.date {
+  background-color: #ccc;
+}
 </style>

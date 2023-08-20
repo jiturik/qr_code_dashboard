@@ -5,8 +5,15 @@
         Create New User QR
       </button>
     </div> -->
-    <b-row>
-      <b-col cols="4" class="mb-1 p-0 ml-3">
+    <div>
+      <b-nav pills>
+        <b-nav-item @click="$router.push({ name: 'createqr' })" active
+          >Create New User</b-nav-item
+        >
+      </b-nav>
+    </div>
+    <!-- <b-row>
+    <b-col cols="4" class="mb-1 p-0 ml-3">
         <b-form-input
           placeholder="Search"
           v-model="searchUser"
@@ -16,7 +23,7 @@
       <b-col cols="1" class="mb-1 p-0">
         <b-button @click="onSearchUser">Search</b-button>
       </b-col>
-      <b-col cols="6" class="mb-1" style="text-align: right">
+    <b-col cols="6" class="mb-1" style="text-align: right">
         <button
           class="AddNewButton text-center"
           @click="$router.push({ name: 'createqr' })"
@@ -24,14 +31,30 @@
           Create New User
         </button>
       </b-col>
-    </b-row>
-    <b-row>
+    </b-row> -->
+    <!-- <b-row>
       <b-col cols="12" style="text-align: right">
         <u>Total : {{ this.totalUsers }} Users</u>
       </b-col>
-    </b-row>
+    </b-row> -->
 
-    <hr class="p-0 mb-1" style="border: 1px solid rgb(197 196 196)" />
+    <!-- <hr class="p-0 mb-1" style="border: 1px solid rgb(197 196 196)" /> -->
+    <hr class="m-2" />
+    <div>
+      <b-nav pills align="left">
+        <b-nav-form @submit.stop.prevent="alert('Form Submitted')">
+          <b-form-input
+            placeholder="search user.."
+            v-model="searchUser"
+            aria-label="Input"
+            class="mr-1"
+          ></b-form-input>
+          <b-button class="AddNewButton" type="submit" @click="onSearchUser"
+            >Search</b-button
+          >
+        </b-nav-form>
+      </b-nav>
+    </div>
     <b-row v-if="false">
       <b-col v-for="(item, index) in allUserList" :key="index" cols="12" md="3">
         <b-card no-body>
@@ -118,7 +141,7 @@
       </div>
     </div>
 
-    <b-row class="pb-3" v-if="showLoadMore">
+    <b-row class="pb-3" v-if="showLoadMore && allUserList.length">
       <b-col cols="12" style="text-align: center">
         <b-button variant="info" @click="showLoadMoreData">Load More</b-button>
       </b-col>
@@ -142,6 +165,9 @@ import {
   BListGroupItem,
   BFormInput,
   BImg,
+  BNav,
+  BNavItem,
+  BNavForm,
 } from "bootstrap-vue";
 import Ripple from "vue-ripple-directive";
 import { GetAllUsers } from "@/apiServices/DashboardServices";
@@ -166,6 +192,9 @@ export default {
     QrcodeVue,
     BFormInput,
     CardComponent,
+    BNav,
+    BNavItem,
+    BNavForm,
   },
   data() {
     return {

@@ -142,7 +142,7 @@ export default {
   beforeMount() {
     const token = TokenService.getToken();
     if (token) {
-      //this.$store.dispatch("user/setUserDetails");
+      // window.location.replace("/home");
     } else {
       if (window.location.pathname !== "/") {
         window.location.replace("/");

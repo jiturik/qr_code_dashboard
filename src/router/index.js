@@ -43,6 +43,14 @@ const router = new VueRouter({
         pageTitle: "Qr Details",
       },
     },
+    {
+      path: "/:qrId",
+      name: "scanDetails",
+      component: () => import("@/views/pages/Home/afterScanDetails.vue"),
+      meta: {
+        pageTitle: "Scan Details",
+      },
+    },
   ],
 });
 

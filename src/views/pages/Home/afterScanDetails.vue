@@ -1,31 +1,7 @@
 <template>
   <div>
     <b-row>
-      <b-col cols="12" md="8">
-        <div class="mb-1">
-          <button
-            class="AddNewButton text-center mr-1"
-            @click="
-              $router.push({
-                name: 'createqr',
-                query: { qrId: unique_code_generate },
-              })
-            "
-          >
-            Edit Profile
-          </button>
-          <button
-            class="AddNewButton text-center"
-            @click="
-              $router.push({
-                name: 'scanDetails',
-                params: { qrId: unique_code_generate },
-              })
-            "
-          >
-            Scan View
-          </button>
-        </div>
+      <b-col cols="12">
         <div>
           <div>
             <div class="panel panel-info">
@@ -40,7 +16,6 @@
                       <b-col>
                         <b-img
                           v-if="imgItem.vModelValue"
-                          class="align-left text-left mt-2"
                           width="150"
                           height="150"
                           fluid
@@ -50,6 +25,7 @@
                         <b-img
                           width="150"
                           height="150"
+                          rounded="circle"
                           v-else
                           class="m-1"
                           fluid
@@ -57,19 +33,6 @@
                           alt="Image 1"
                         ></b-img>
                       </b-col>
-                      <b-col
-                        ><h3 class="panel-title text-center">
-                          <b>Profile</b>
-                        </h3></b-col
-                      >
-                      <b-col>
-                        <qrcode-vue
-                          class="mt-2 align-right text-right"
-                          :size="qrSize"
-                          level="H"
-                          :value="qrValue + imgItem.unique_code_generate"
-                        ></qrcode-vue
-                      ></b-col>
                     </b-row>
                   </b-col>
                 </div>
@@ -88,7 +51,7 @@
                             style="text-align: left"
                             v-if="item.inputType != 'file'"
                           >
-                            <b> {{ item.label }} </b><br />
+                            <b style=""> {{ item.label }} </b><br />
                             <div
                               style="text-align: left"
                               v-if="item.inputType == 'quill'"
@@ -98,13 +61,12 @@
                               {{ item.vModelValue }}
                             </div>
                           </td>
-
                           <!-- <td
                             align="left"
                             style="text-align: left"
                             v-if="item.inputType != 'file'"
                           >
-                           
+                          
                             <div
                               style="text-align: left"
                               v-if="item.inputType == 'quill'"
@@ -160,7 +122,7 @@ export default {
 
   beforeMount() {
     this.qrValue = window.location.origin + "/";
-    this.unique_code_generate = this.$route.query.qrId;
+    this.unique_code_generate = this.$route.params.qrId;
     this.onGetUserQRDetails();
   },
   methods: {

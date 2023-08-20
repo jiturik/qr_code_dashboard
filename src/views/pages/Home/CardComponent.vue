@@ -18,24 +18,34 @@
         <div class="d-flex alignmentClass mb-5px">
           <h6 class="fontFamily">Name:</h6>
           <h6 class="fontFamily" style="color: #fff">
-            {{ getname("Full Name") }}
+            <div
+              class="ml-1"
+              style="
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 130px;
+              "
+            >
+              {{ getname("Full Name") }}
+            </div>
           </h6>
         </div>
         <div class="d-flex alignmentClass mb-5px">
           <h6 class="fontFamily">Blood:</h6>
-          <h6 class="fontFamily" style="color: #fff">
+          <h6 class="fontFamily ml-1" style="color: #fff">
             {{ getname("Blood Group") }}
           </h6>
         </div>
         <div class="d-flex alignmentClass mb-5px">
           <h6 class="fontFamily">Height:</h6>
-          <h6 class="fontFamily" style="color: #fff">
+          <h6 class="fontFamily ml-1" style="color: #fff">
             {{ getname("Height") }}
           </h6>
         </div>
         <div class="d-flex alignmentClass mb-5px">
           <h6 class="fontFamily">Weight:</h6>
-          <h6 class="fontFamily" style="color: #fff">
+          <h6 class="fontFamily ml-1" style="color: #fff">
             {{ getname("Weight") }}
           </h6>
         </div>
@@ -77,7 +87,7 @@ export default {
 
     async onEdit() {
       this.$router.push({
-        name: "createqr",
+        name: "qrdetails",
         query: { qrId: this.unique_id },
       });
     },
@@ -88,6 +98,7 @@ export default {
 <style scoped>
 .alignmentClass {
   justify-content: space-between;
+  /* justify-content: center; */
   align-items: center;
 }
 .mb-5px {
@@ -116,6 +127,12 @@ export default {
   padding-top: 2px;
   width: 45%;
   text-align: center;
+}
+.card:hover {
+  transform: scale(1.1);
+  z-index: 99999;
+  transition: 0.2s;
+  background: black;
 }
 .card {
   font: 16px/1.5 "Helvetica Neue", Helvetica, sans-serif;
