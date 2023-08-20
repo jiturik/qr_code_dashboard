@@ -55,7 +55,7 @@
         </b-nav-form>
       </b-nav>
     </div>
-    <b-row v-if="false">
+    <!-- <b-row v-if="false">
       <b-col v-for="(item, index) in allUserList" :key="index" cols="12" md="3">
         <b-card no-body>
           <b-row
@@ -124,7 +124,7 @@
           </template>
         </b-card>
       </b-col>
-    </b-row>
+    </b-row> -->
 
     <div class="card-container pb-3" v-if="allUserList.length">
       <template v-for="item in allUserList">
@@ -217,7 +217,7 @@ export default {
   },
 
   beforeMount() {
-    this.qrValue = window.location.origin + "/";
+    this.qrValue = window.location.origin + "/afterscan/";
     this.onGetAllUsers();
   },
 

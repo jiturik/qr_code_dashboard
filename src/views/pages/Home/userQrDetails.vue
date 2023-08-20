@@ -19,7 +19,7 @@
             @click="
               $router.push({
                 name: 'scanDetails',
-                params: { qrId: unique_code_generate },
+                query: { qrId: unique_code_generate },
               })
             "
           >
@@ -159,7 +159,7 @@ export default {
   computed: {},
 
   beforeMount() {
-    this.qrValue = window.location.origin + "/";
+    this.qrValue = window.location.origin + "/afterscan/";
     this.unique_code_generate = this.$route.query.qrId;
     this.onGetUserQRDetails();
   },

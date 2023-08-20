@@ -82,7 +82,7 @@ export default {
       return checkData.length ? checkData[0].vModelValue || "-" : "-";
     },
     beforeMount() {
-      this.qrValue = window.location.origin + "/";
+      this.qrValue = window.location.origin + "/afterscan/";
     },
 
     async onEdit() {

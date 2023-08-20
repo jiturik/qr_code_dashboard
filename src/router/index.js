@@ -44,11 +44,12 @@ const router = new VueRouter({
       },
     },
     {
-      path: "/:qrId",
+      path: "/afterscan",
       name: "scanDetails",
       component: () => import("@/views/pages/Home/afterScanDetails.vue"),
       meta: {
         pageTitle: "Scan Details",
+        layout: "full",
       },
     },
   ],

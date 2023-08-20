@@ -121,8 +121,8 @@ export default {
   computed: {},
 
   beforeMount() {
-    this.qrValue = window.location.origin + "/";
-    this.unique_code_generate = this.$route.params.qrId;
+    this.qrValue = window.location.origin + "/afterscan/";
+    this.unique_code_generate = this.$route.query.qrId;
     this.onGetUserQRDetails();
   },
   methods: {
