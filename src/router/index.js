@@ -46,7 +46,7 @@ const router = new VueRouter({
     {
       path: "/afterscan",
       name: "scanDetails",
-      component: () => import("@/views/pages/Home/afterScanDetails.vue"),
+      component: () => import("@/views/pages/Home/afterScanDetailsNew.vue"),
       meta: {
         pageTitle: "Scan Details",
         layout: "full",
