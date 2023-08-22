@@ -135,13 +135,13 @@ export default {
       this.getNotificationInterval = setInterval(() => {
         // this.$store.dispatch("user/setNewNotifications");
       }, 10000);
-
-      if (window.location.pathname === "/") this.$router.push({ name: "home" });
     },
   },
   beforeMount() {
     const token = TokenService.getToken();
-    if (token) {
+
+    if (!window.location.pathname.includes("afterscan")) {
+    } else if (token) {
       this.$router.push({ name: "home" });
     } else {
       if (

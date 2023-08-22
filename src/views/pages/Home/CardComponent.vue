@@ -2,7 +2,9 @@
   <div class="card card--front" @click="onEdit">
     <div class="row display-flex mb-1 alignmentClass">
       <img src="@/assets/images/pages/medicallogo.png" style="height: 40px" />
-      <h6 class="fontFamily">Medical Information & Scan QR More Detail</h6>
+      <h6 class="fontFamily font-size2">
+        Medical Information & Scan QR More Detail
+      </h6>
     </div>
     <div class="row">
       <div class="col-4 qr_code p-0">
@@ -25,6 +27,7 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 width: 130px;
+                text-align: right;
               "
             >
               {{ getname("Full Name") }}
@@ -68,21 +71,19 @@ export default {
   data() {
     return {
       BASE_URL: process.env.VUE_APP_BASEURL,
-      qrValue: null,
       qrSize: 90,
       qrValue: null,
     };
   },
-
+  mounted() {
+    this.qrValue = window.location.origin + "/afterscan?qrId=";
+  },
   methods: {
     getname(type) {
       console.log(this.data);
       let checkData = this.data.filter((z) => z.label == type);
       console.log(checkData);
       return checkData.length ? checkData[0].vModelValue || "-" : "-";
-    },
-    beforeMount() {
-      this.qrValue = window.location.origin + "/afterscan/";
     },
 
     async onEdit() {
@@ -109,6 +110,9 @@ export default {
   font-weight: 500;
   line-height: 1.2;
   color: #cfd4da;
+}
+.font-size2 {
+  font-size: 13px;
 }
 .qr_code {
   background: #fff;
