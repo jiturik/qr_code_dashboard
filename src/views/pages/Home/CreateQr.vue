@@ -13,6 +13,11 @@
             label-for="nested-street"
             label-cols-sm="3"
             label-align-sm="left"
+            :class="
+              errorCheckKeyValidation.filter((z) => z.key == item.key).length
+                ? 'test'
+                : ''
+            "
           >
             <b-form-input
               class="mb-1"
@@ -60,6 +65,19 @@
             >
             </quill-editor>
           </b-form-group>
+          <h6
+            class="error"
+            v-if="
+              isSubmitted &&
+              !item.vModelValue &&
+              errorCheckKeyValidation.filter((z) => z.key == item.key).length
+            "
+          >
+            {{
+              errorCheckKeyValidation.filter((z) => z.key == item.key)[0]
+                .errorMessage
+            }}
+          </h6>
         </b-card>
 
         <b-button size="sm" variant="warning " @click="onAddMoreFields">
@@ -124,6 +142,9 @@ export default {
       sectionArray: [],
       unique_code_generate: this.$route.query.qrId,
       BASE_URL: process.env.VUE_APP_BASEURL,
+      errorCheckKeyValidation: [],
+      isSubmitted: false,
+      errorMessage: false,
     };
   },
 
@@ -137,6 +158,21 @@ export default {
   },
 
   methods: {
+    checkValidation() {
+      let checkValidation = true;
+      this.errorCheckKeyValidation.map((z) => {
+        let findInd = this.sectionArray.findIndex((_s) => {
+          return _s.key == z.key;
+        });
+        if (findInd >= 0) {
+          if (!this.sectionArray[findInd].vModelValue) {
+            checkValidation = false;
+          }
+        }
+      });
+      console.log(checkValidation, "checkValidation");
+      return checkValidation;
+    },
     async onFileUpload(item, index) {
       this.loading = true;
       try {
@@ -175,6 +211,8 @@ export default {
           } else {
             this.sectionArray = response.data.defaultFieldsArray;
           }
+          this.errorCheckKeyValidation =
+            response.data.errorCheckKeyValidation || [];
         } else {
           this.$toast({
             component: ToastificationContentVue,
@@ -201,31 +239,34 @@ export default {
 
     async onGenerateQrCode() {
       try {
-        const response = await GenerateQrCode({
-          all_data: JSON.stringify(this.sectionArray),
-          unique_code_generate: this.unique_code_generate,
-        });
-
-        if (response.data.status) {
-          this.$toast({
-            component: ToastificationContentVue,
-            props: {
-              title: response.data.message,
-              icon: "EditIcon",
-              variant: "primary",
-            },
+        this.isSubmitted = true;
+        if (this.checkValidation()) {
+          const response = await GenerateQrCode({
+            all_data: JSON.stringify(this.sectionArray),
+            unique_code_generate: this.unique_code_generate,
           });
 
-          this.$router.push({ name: "home" });
-        } else {
-          this.$toast({
-            component: ToastificationContentVue,
-            props: {
-              title: response.data.message,
-              icon: "EditIcon",
-              variant: "danger",
-            },
-          });
+          if (response.data.status) {
+            this.$toast({
+              component: ToastificationContentVue,
+              props: {
+                title: response.data.message,
+                icon: "EditIcon",
+                variant: "primary",
+              },
+            });
+
+            this.$router.push({ name: "home" });
+          } else {
+            this.$toast({
+              component: ToastificationContentVue,
+              props: {
+                title: response.data.message,
+                icon: "EditIcon",
+                variant: "danger",
+              },
+            });
+          }
         }
       } catch (err) {
         console.log("Error in GenerateQrCode ", err);
@@ -237,4 +278,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@core/scss/vue/libs/vue-flatpicker.scss";
+.error {
+  color: red;
+}
+
+.test::before {
+  content: "*";
+  color: red;
+}
 </style>
