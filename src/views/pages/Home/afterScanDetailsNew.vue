@@ -9,7 +9,7 @@
           :src="BASE_URL + imgItem.vModelValue"
           alt="profile card"
         />
-        <img :src="imgAvtar" alt="Image 1" v-else />
+        <img :src="imgAvtar" alt="Image 1" v-else-if="imgItem.key == 'photo'" />
       </div>
 
       <div class="profile-card__cnt js-profile-cnt">
