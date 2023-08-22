@@ -267,6 +267,15 @@ export default {
               },
             });
           }
+        } else {
+          this.$toast({
+            component: ToastificationContentVue,
+            props: {
+              title: "Please Fill the * details",
+              icon: "EditIcon",
+              variant: "danger",
+            },
+          });
         }
       } catch (err) {
         console.log("Error in GenerateQrCode ", err);

@@ -20,7 +20,7 @@
 
           <div class="profile-card-loc">
             <span v-if="imgItem1.key == 'dob'" class="profile-card-loc__txt">
-              DOB : {{ imgItem1.vModelValue }}
+              DOB : {{ moment(imgItem1.vModelValue).format("DD MMM YYYY") }}
             </span>
             <span v-if="imgItem1.key == 'gender'" class="profile-card-loc__txt">
               Gender : {{ imgItem1.vModelValue }}
@@ -48,10 +48,10 @@
                 <div
                   style="text-align: left"
                   v-if="item.inputType == 'quill'"
-                  v-html="item.vModelValue"
+                  v-html="item.vModelValue ? item.vModelValue : '-'"
                 ></div>
                 <div style="text-align: left" v-else>
-                  {{ item.vModelValue }}
+                  {{ item.vModelValue || "-" }}
                 </div>
               </td>
             </tr>
@@ -69,6 +69,7 @@ import VuexyLogo from "@core/layouts/components/Logo.vue";
 import { GetUserQrDetails } from "@/apiServices/DashboardServices";
 import ToastificationContentVue from "@core/components/toastification/ToastificationContent.vue";
 import QrcodeVue from "qrcode.vue";
+import moment from "moment";
 
 export default {
   components: {
@@ -98,6 +99,7 @@ export default {
     this.onGetUserQRDetails();
   },
   methods: {
+    moment,
     async onGetUserQRDetails() {
       try {
         const response = await GetUserQrDetails({
