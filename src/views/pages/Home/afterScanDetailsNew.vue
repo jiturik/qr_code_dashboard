@@ -5,10 +5,11 @@
         <img
           v-for="(imgItem, imgIndex) in userDetailsArray"
           :key="imgIndex"
-          v-if="imgItem.key == 'photo'"
+          v-if="imgItem.key == 'photo' && imgItem.vModelValue"
           :src="BASE_URL + imgItem.vModelValue"
           alt="profile card"
         />
+        <img :src="imgAvtar" alt="Image 1" v-else />
       </div>
 
       <div class="profile-card__cnt js-profile-cnt">
