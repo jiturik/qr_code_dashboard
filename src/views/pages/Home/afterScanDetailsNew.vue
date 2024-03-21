@@ -12,7 +12,7 @@
         <img :src="imgAvtar" alt="Image 1" v-else-if="imgItem.key == 'photo'" />
       </div>
 
-      <div class="profile-card__cnt js-profile-cnt">
+      <div class="profile-card__cnt js-profile-cnt scrollDiv">
         <div v-for="(imgItem1, imgIndex1) in userDetailsArray" :key="imgIndex1">
           <div v-if="imgItem1.key == 'name'" class="profile-card__name">
             {{ imgItem1.vModelValue }}
@@ -199,7 +199,7 @@ a:hover {
   box-shadow: 0px 8px 60px -10px rgba(13, 28, 39, 0.6);
   background: #fff;
   border-radius: 12px;
-  max-width: 700px;
+  max-width: 100%;
   position: relative;
 
   &.active {

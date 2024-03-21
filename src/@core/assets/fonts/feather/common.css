@@ -732,3 +732,12 @@ body {
   overflow-x: hidden;
   font-family: verdana;
 }
+[dir] img {
+  border-style: none;
+  max-width: 500px !important;
+}
+.scrollDiv {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}

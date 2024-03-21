@@ -63,13 +63,14 @@
                         </h3></b-col
                       >
                       <b-col>
-                        <qrcode-vue
+                        <!-- <qrcode-vue
                           class="mt-2 align-right text-right"
                           :size="qrSize"
                           level="H"
                           :value="qrValue + imgItem.unique_code_generate"
                         ></qrcode-vue
-                      ></b-col>
+                      > -->
+                      </b-col>
                     </b-row>
                   </b-col>
                 </div>
@@ -90,7 +91,7 @@
                           >
                             <b> {{ item.label }} </b><br />
                             <div
-                              style="text-align: left"
+                              style="text-align: left; width: 50%"
                               v-if="item.inputType == 'quill'"
                               v-html="item.vModelValue"
                             ></div>
