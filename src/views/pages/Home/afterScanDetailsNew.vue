@@ -42,7 +42,7 @@
               <td
                 align="left"
                 style="text-align: left"
-                v-if="item.inputType != 'file'"
+               v-if="!['photo', 'document'].includes(item.key)"
               >
                 <b class="text-muted" style=""> {{ item.label }} </b><br />
                 <div
@@ -54,6 +54,16 @@
                   {{ item.vModelValue || "-" }}
                 </div>
               </td>
+              <td v-else-if="['document'].includes(item.key)">
+                            <b class="text-muted"> {{ item.label }}: </b><br />
+                            <div v-if="item.vModelValue && item.vModelValue.length ">
+                              <div class="mt-1" v-for="(item2, index2) in item.vModelValue.reverse()" :key="index2">
+                                <div v-if="item2.name" style="font-weight:bold">{{ item2.name }}</div>
+                                <div class="mt=1"><img :src="BASE_URL + item2.path" /></div>
+                              </div>
+                            </div>
+
+                          </td>
             </tr>
           </tbody>
         </table>
