@@ -139,11 +139,14 @@ export default {
   },
   beforeMount() {
     const token = TokenService.getToken();
-    if(window.location.pathname.includes("afterscan")){
+    if (window.location.pathname.includes("afterscan")) {
 
-    }else if (!token) {
+    } else if (token && window.location.pathname == '/') {
+      this.$router.push({ path: "/home" });
+
+    } else if (!token) {
       this.$router.push({ path: "/" });
-    } 
+    }
   },
 };
 </script>

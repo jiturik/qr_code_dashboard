@@ -57,7 +57,7 @@
               <td v-else-if="['document'].includes(item.key)">
                             <b class="text-muted"> {{ item.label }}: </b><br />
                             <div v-if="item.vModelValue && item.vModelValue.length ">
-                              <div class="mt-1" v-for="(item2, index2) in item.vModelValue.reverse()" :key="index2">
+                              <div class="mt-1" v-for="(item2, index2) in item.vModelValue" :key="index2">
                                 <div v-if="item2.name" style="font-weight:bold">{{ item2.name }}</div>
                                 <div class="mt=1"><img :src="BASE_URL + item2.path" /></div>
                               </div>
@@ -122,6 +122,11 @@ export default {
             response.data.Records.data.length
           ) {
             this.userDetailsArray = response.data.Records.data[0].all_data;
+            this.userDetailsArray.map(z=>{
+              if(z.key=='document'){
+                z["vModelValue"] = z.vModelValue.reverse()
+              }
+            })
           } else {
             //this.sectionArray = response.data.defaultFieldsArray;
           }
