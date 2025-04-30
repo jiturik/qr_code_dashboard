@@ -6,6 +6,8 @@ import router from "./router";
 import store from "./store";
 import App from "./App.vue";
 import Bootstrap from "bootstrap-vue";
+import Viewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
 Vue.use(Bootstrap);
 // Global Components
 import "./global-components";
@@ -35,6 +37,11 @@ Vue.use(VueTelInput, {
     showSearchBox: true,
   },
 });
+Vue.use(Viewer, {
+  defaultOptions: {
+    zIndex: 9999
+  }
+})
 // BSV Plugin Registration
 Vue.use(ToastPlugin);
 Vue.use(ModalPlugin);
